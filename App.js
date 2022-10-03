@@ -4,7 +4,7 @@ const App = () => {
   const [name, setName] = useState('')
   const [data, setData] = useState([])
   const [btn, setBtn] = useState("Add")
-
+  const [indexx, setIndexx] = useState()
   const handleData = useCallback(
     () => {
       setData([...data, name])
@@ -25,17 +25,62 @@ const App = () => {
   const handleUpdate = (item) => {
     setBtn((e) => e.btn = "Update")
     setName(item)
+    setIndexx(data.indexOf(item))
   }
 
+  console.log(indexx)
+
+  const Update = useCallback(
+    () => {
+      // let Update = data
+      // Update[indexx] = name
+      // setData([...Update])
+      data[indexx]=name
+      setData([...data])
+      setName(name)
+      setBtn((e) => e.btn = "Add")
+      setName("")
+    },
+    [setData, setName, name, setBtn],
+  )
+  
+  
+  
+    //   if (item== indexx) {
+    // data.map(item => {
+    //     return { ...item, name };
+    //   } else {
+    //     return item;
+    //   }})
+
+
+    // data[indexx].name=setName()
+
+    // data.map(item=>{
+    //   if(item.indexx==indexx){return{...item}}
+    // })
+
+    // data.map((item)=>{
+    //   if(item.name=indexx){
+    //     setName("")
+    //   }
+    // })
+
+  // const handleGlobalIndex=()=>{
+  //   setIndex(()=>{
+
+  //   })
+  // }
   return (
     <View style={styles.container}>
+      <Text style={styles.txt}>CRUD Operation!</Text>
       <TextInput
         placeholder='Enter Text'
         style={styles.input}
         value={name}
         onChangeText={setName}
       />
-      <TouchableOpacity style={styles.button} onPress={() =>{handleData()} }>
+      <TouchableOpacity style={styles.button} onPress={() => { if (btn == "Add") { handleData() } else { Update() } }}>
         <Text style={styles.text}>{btn}</Text>
       </TouchableOpacity>
 
@@ -45,7 +90,7 @@ const App = () => {
         renderItem={({ item }) => (
           <>
             <TouchableOpacity onPress={() => { handleUpdate(item) }}>
-              <Text>{item}</Text>
+              <Text >{item}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.bg} onPress={() => { handleDelete(item) }}>
               <Text>Delete</Text>
@@ -71,7 +116,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'teal',
     justifyContent: 'center',
     alignSelf: 'center',
-    width: 80,
+    width: 150,
     borderRadius: 8,
   },
   text: {
@@ -86,5 +131,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     width: 50,
     height: 25,
+  },
+  txt:{
+    fontWeight:'bold',
+    textAlign:'center',
+    marginVertical:20,
+    fontSize:30,
+    color:"blue",
   }
 })
