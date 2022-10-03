@@ -9,9 +9,6 @@ const App = () => {
     () => {
       setData([...data, name])
       setName("")
-      // if (btn == "Update") {
-      //   setBtn()
-      // }
     }, [data, name],
   )
   // console.log(data);
@@ -19,19 +16,17 @@ const App = () => {
   const handleDelete = (item) => {
     // setIndex(data.indexOf(item))
     var ind = data.indexOf(item)
-    console.log(item)
+    // console.log(item)
     setData(data.filter(index => index !== item))
 
   }
-  console.log(data);
+  // console.log(data);
 
   const handleUpdate = (item) => {
     setBtn((e) => e.btn = "Update")
     setName(item)
   }
-  const FunUpdate = () => {
-    console.log("Update function is run")
-  }
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -40,7 +35,7 @@ const App = () => {
         value={name}
         onChangeText={setName}
       />
-      <TouchableOpacity style={styles.button} onPress={() =>{if(btn = "Add"){handleData()} else{FunUpdate()}}}>
+      <TouchableOpacity style={styles.button} onPress={() =>{handleData()} }>
         <Text style={styles.text}>{btn}</Text>
       </TouchableOpacity>
 
